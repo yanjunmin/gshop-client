@@ -13,7 +13,10 @@ export default new Router({
     {
       path: '/msite',
       name: 'msite',
-      component: Msite
+      component: Msite,
+      meta: {
+        showFooter: true
+      }
     },
     {
       path: '/',
@@ -27,22 +30,34 @@ export default new Router({
     {
       path: '/profile',
       name: 'profile',
-      component: Profile
+      component: Profile,
+      meta: {
+        showFooter: true
+      }
     },
     {
       path: '/shop',
       name: 'shop',
-      component: Shop
+      component: Shop,
+      meta: {
+        showFooter: true
+      }
     },
     {
       path: '/order',
       name: 'order',
-      component: Order
+      component: Order,
+      meta: {
+        showFooter: true
+      }
     },
     {
       path: '/search',
       name: 'search',
-      component: Search
+      component: Search,
+      meta: {
+        showFooter: true
+      }
     }
   ]
 })
