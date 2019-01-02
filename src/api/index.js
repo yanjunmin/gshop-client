@@ -13,3 +13,5 @@ export const reqCateGorys = () => ajax(BASE_URL + '/index_category')
 export const reqShop = (longitude, latitude) => ajax(BASE_URL + '/shops',{longitude, latitude})
 // 根据经纬度和关键字搜索商铺列表
 export const reqSearchShop = (gohash,keyword) => ajax(BASE_URL + '/search_shops',{gohash, keyword})
+// 用户名密码登录
+export const reqPwdLogin = ({name, pwd, captcha}) => ajax(BASE_URL + '/login_pwd',{name, pwd, captcha}, 'POST')
