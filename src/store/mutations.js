@@ -15,7 +15,7 @@ import {
   DECREMENT_FOOD_COUNT,
   CLEAR_CART,
   RECEIVE_SEARCH_SHOPS
-} from './mutation_type'
+} from './mutation-type'
 
 export default {
   [RECEIVE_ADDRESS] (state, {address}) {
