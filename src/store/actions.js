@@ -29,8 +29,8 @@ import {
 
 export default {
   // 异步获取地址
-  async getAddress({commit, state}) {
-    //发送异步ajax请求
+  async getAddress ({commit, state}) {
+    // 发送异步ajax请求
     const gohash = state.latitude + ',' + state.longitude
     const result = await reqAddress(gohash)
     // 提交一个mutation
@@ -39,8 +39,8 @@ export default {
       commit(RECEIVE_ADDRESS, {address})
     }
   },
-    // 异步获取食品分类列表
-  async getCategorys({commit}) {
+  // 异步获取食品分类列表
+  async getCategorys ({commit}) {
     // 发送异步ajax请求
     const result = await reqFoodCategorys()
     // 提交一个mutation
@@ -51,7 +51,7 @@ export default {
   },
 
   // 异步获取商家列表
-  async getShops({commit, state}) {
+  async getShops ({commit, state}) {
     // 发送异步ajax请求
     const {longitude, latitude} = state
     const result = await reqShops(longitude, latitude)
@@ -63,12 +63,12 @@ export default {
   },
 
   // 同步记录用户信息
-  recordUser({commit}, userInfo) {
+  recordUser ({commit}, userInfo) {
     commit(RECEIVE_USER_INFO, {userInfo})
   },
 
   // 异步获取用户信息
-  async getUserInfo({commit}) {
+  async getUserInfo ({commit}) {
     const result = await reqUserInfo()
     if (result.code === 0) {
       const userInfo = result.data
@@ -77,7 +77,7 @@ export default {
   },
 
   // 异步登出
-  async logout({commit}) {
+  async logout ({commit}) {
     const result = await reqLogout()
     if (result.code === 0) {
       commit(RESET_USER_INFO)
@@ -85,7 +85,7 @@ export default {
   },
 
   // 异步获取商家信息
-  async getShopInfo({commit}) {
+  async getShopInfo ({commit}) {
     const result = await reqShopInfo()
     if (result.code === 0) {
       const info = result.data
@@ -94,7 +94,7 @@ export default {
   },
 
   // 异步获取商家评价列表
-  async getShopRatings({commit}, callback) {
+  async getShopRatings ({commit}, callback) {
     const result = await reqShopRatings()
     if (result.code === 0) {
       const ratings = result.data
@@ -105,7 +105,7 @@ export default {
   },
 
   // 异步获取商家商品列表
-  async getShopGoods({commit}, callback) {
+  async getShopGoods ({commit}, callback) {
     const result = await reqShopGoods()
     if (result.code === 0) {
       const goods = result.data
@@ -116,7 +116,7 @@ export default {
   },
 
   // 同步更新food中的count值
-  updateFoodCount({commit}, {isAdd, food}) {
+  updateFoodCount ({commit}, {isAdd, food}) {
     if (isAdd) {
       commit(INCREMENT_FOOD_COUNT, {food})
     } else {
@@ -125,13 +125,12 @@ export default {
   },
 
   // 同步清空购物车
-  clearCart({commit}) {
+  clearCart ({commit}) {
     commit(CLEAR_CART)
   },
 
   // 异步获取商家商品列表
-  async searchShops({commit, state}, keyword) {
-
+  async searchShops ({commit, state}, keyword) {
     const geohash = state.latitude + ',' + state.longitude
     const result = await reqSearchShop(geohash, keyword)
     if (result.code === 0) {
