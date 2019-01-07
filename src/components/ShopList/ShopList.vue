@@ -42,7 +42,7 @@
       </li>
     </ul>
     <ul v-else>
-      <li>
+      <li v-for="item in 6">
         <img src="./images/shop_back.svg" alt="back">
       </li>
     </ul>
@@ -50,57 +50,19 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
 import Star from '@/components/Star/Star'
 export default {
   data () {
     return {
-      baseImgUrl: 'http://cangdu.org:8001/img/',
-      shops: [
-        {
-          name: '扯淡',
-          rating: 4,
-          image_path: '',
-          recent_order_num: 500,
-          float_minimum_order_amount: 20,
-          float_delivery_fee: 10,
-          delivery_mode: {
-            text: '请快点下单'
-          }
-        },
-        {
-          name: '扯淡',
-          rating: 4,
-          image_path: '',
-          recent_order_num: 500,
-          float_minimum_order_amount: 20,
-          float_delivery_fee: 10,
-          delivery_mode: {
-            text: '请快点下单'
-          }
-        },
-        {
-          name: '扯淡',
-          rating: 4,
-          image_path: '',
-          recent_order_num: 500,
-          float_minimum_order_amount: 20,
-          float_delivery_fee: 10,
-          delivery_mode: {
-            text: '请快点下单'
-          }
-        }
-      ],
-      supports: [
-        {
-          icon_name: 'fff'
-        }
-      ],
-      item: [
-        {
-          ss: 1
-        }
-      ]
+      baseImgUrl: 'http://cangdu.org:8002/img/'
     }
+  },
+  mounted () {
+    this.$store.dispatch('getShops')
+  },
+  computed: {
+    ...mapState(['shops'])
   },
   components: {
     Star
@@ -109,6 +71,7 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
+@import '../../common/stylus/mixins.styl'
 .shop_container
     margin-bottom 50px
     .shop_list
