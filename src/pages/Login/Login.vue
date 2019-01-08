@@ -80,6 +80,19 @@ export default {
     },
     login () {
       console.log('登录方法被调用')
+    },
+    getCode () {
+      // 当计时的值为0时进行倒计时操作
+      if (!this.computeTime) {
+        this.computeTime = 30 // 倒计时30s
+        const intervalId = setInterval(() => {
+          this.computeTime--
+          // 停止计时
+          if (this.computeTime <= 0) {
+            clearInterval(intervalId)
+          }
+        }, 1000) // 设置1s更新一次
+      }
     }
   },
 
