@@ -54,12 +54,13 @@
         <i class="iconfont icon-jiantou2"></i>
       </a>
     </div>
-    <AlertTip alertText='信息有误'/>
+    <AlertTip :alertText="alertText" v-show="alertShow" @closeTip="closeTip"/>
   </section>
 </template>
 
 <script>
 import AlertTip from '@/components/AlertTip/AlertTip'
+import {reqSendCode, reqSmsLogin, reqPwdLogin} from '@/api'
 export default {
   data () {
     return {
@@ -77,23 +78,95 @@ export default {
   },
 
   methods: {
+    // 获取一个新的图形验证码
     getCaptcha () {
-      console.log('调用验证码方法')
+      this.$refs.captcha.src = 'http://localhost:4000/captcha?time=' + Date.now()
     },
-    login () {
-      console.log('登录方法被调用')
+    showAlert (alertText) {
+      this.alertShow = true
+      this.alertText = alertText
+    },
+    async login () {
+      let result
+      // 短信登录
+      if (this.loginWay) {
+        // 前台表单验证
+        const {rightPhone, phone, code} = this
+        if (!rightPhone) {
+          this.showAlert('手机号码不正确')
+          return
+        } else if (!/^\d{6}$/.test(code)) {
+          this.showAlert('验证码必须为6位数字')
+          return
+        }
+        // 发送ajax请求进行短信登录
+        result = await reqSmsLogin(phone, code)
+      } else {
+        // 密码登陆
+        const {name, pwd, captcha} = this
+        if (!this.name) {
+          // 用户名必须指定
+          this.showAlert('用户名必须指定')
+          return
+        } else if (!this.pwd) {
+          // 密码必须指定
+          this.showAlert('密码必须指定')
+          return
+        } else if (!this.captcha) {
+          // 验证码必须指定
+          this.showAlert('验证码必须指定')
+          return
+        }
+        // 发送ajax请求密码登陆
+        result = await reqPwdLogin({name, pwd, captcha})
+      }
+      // 停止计时
+      if (this.computeTime) {
+        this.computeTime = 0
+        clearInterval(this.intervalId)
+        this.intervalId = undefined
+      }
+      console.log(result)
+      // 根据结果进行数据处理
+      if (result.code === 0) {
+        const user = result.data
+        console.log(user)
+      } else {
+        // 显示新的图片验证码
+        this.getCaptcha()
+        // 显示警告提示
+        const msg = result.msg
+        this.showAlert(msg)
+      }
+    },
+    // 关闭警告框
+    closeTip () {
+      this.alertShow = false
+      this.alertText = ''
     },
     getCode () {
       // 当计时的值为0时进行倒计时操作
       if (!this.computeTime) {
         this.computeTime = 30 // 倒计时30s
-        const intervalId = setInterval(() => {
+        this.intervalId = setInterval(() => {
           this.computeTime--
           // 停止计时
           if (this.computeTime <= 0) {
-            clearInterval(intervalId)
+            clearInterval(this.intervalId)
           }
         }, 1000) // 设置1s更新一次
+        // 进行ajax请求（向指定手机号发送验证码）
+        const result = reqSendCode(this.phone)
+        if (result.code === 1) {
+          // 显示提示
+          this.showAlert(result.msg)
+          // 停止计时
+          if (this.computeTime) {
+            this.computeTime = 0
+            clearInterval(this.intervalId)
+            this.intervalId = undefined
+          }
+        }
       }
     }
   },
