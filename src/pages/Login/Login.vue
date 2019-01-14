@@ -54,10 +54,12 @@
         <i class="iconfont icon-jiantou2"></i>
       </a>
     </div>
+    <AlertTip alertText='信息有误'/>
   </section>
 </template>
 
 <script>
+import AlertTip from '@/components/AlertTip/AlertTip'
 export default {
   data () {
     return {
@@ -100,6 +102,9 @@ export default {
     rightPhone () {
       return /^1\d{10}$/.test(this.phone)
     }
+  },
+  components: {
+    AlertTip
   }
 }
 </script>
