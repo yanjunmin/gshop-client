@@ -2,7 +2,7 @@
   <section class="loginContainer">
     <div class="loginInner">
       <div class="login_header">
-        <h2 class="login_logo">westyle.top外卖</h2>
+        <h2 class="login_logo">westyle.top</h2>
         <div class="login_header_title">
           <a href="javascript:;" :class="{on: loginWay}" @click="loginWay=true">短信登录</a>
           <a href="javascript:;" :class="{on: !loginWay}" @click="loginWay=false">密码登录</a>
@@ -130,6 +130,7 @@ export default {
       // 根据结果进行数据处理
       if (result.code === 0) {
         const user = result.data
+        // 拿到用户信息存入vuex中
         console.log(user)
       } else {
         // 显示新的图片验证码
