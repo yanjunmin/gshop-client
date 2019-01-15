@@ -131,6 +131,10 @@ export default {
       if (result.code === 0) {
         const user = result.data
         console.log(user)
+        // 将用户信息存入vuex
+        this.$store.dispatch('recordUser', user)
+        // 去个人中心界面
+        this.$router.replace('/profile')
       } else {
         // 显示新的图片验证码
         this.getCaptcha()
