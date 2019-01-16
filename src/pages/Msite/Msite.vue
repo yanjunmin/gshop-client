@@ -108,6 +108,9 @@ export default {
           }
         })
       })
+    },
+    userInfo (value) {
+      console.log(value)
     }
   },
   components: {
