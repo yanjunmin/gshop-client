@@ -132,6 +132,10 @@ export default {
         const user = result.data
         // 拿到用户信息存入vuex中
         console.log(user)
+        // 将用户信息存入vuex
+        this.$store.dispatch('recordUser', user)
+        // 去个人中心界面
+        this.$router.replace('/profile')
       } else {
         // 显示新的图片验证码
         this.getCaptcha()

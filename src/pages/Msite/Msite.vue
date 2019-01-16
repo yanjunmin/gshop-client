@@ -5,8 +5,8 @@
       <router-link class="header_search" slot="left" to="/search">
         <i class="iconfont icon-sousuo"></i>
       </router-link>
-      <router-link class="header_login" slot="right" to="/login">
-        <span class="header_login_text" v-if="userInfo._id">
+      <router-link class="header_login" slot="right" :to="userInfo._id ? '/userinfo' : '/login'">
+        <span class="header_login_text" v-if="!userInfo._id">
           登录|注册
         </span>
         <span class="header_login_text" v-else>
@@ -58,11 +58,7 @@ import ShopList from '@/components/ShopList/ShopList'
 export default {
   data () {
     return {
-      baseImageUrl: 'https://fuss10.elemecdn.com',
-      userInfo: {
-        _id: 'wwwwwwwww',
-        name: '刚刚'
-      }
+      baseImageUrl: 'https://fuss10.elemecdn.com'
     }
   },
   mounted () {
@@ -71,7 +67,7 @@ export default {
   },
 
   computed: {
-    ...mapState(['address', 'categorys']),
+    ...mapState(['address', 'categorys', 'userInfo']),
     /*
     根据categorys一维数组生成一个2维数组
     小数组中的元素个数最大是8
