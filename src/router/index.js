@@ -4,6 +4,7 @@ import Msite from '@/pages/Msite/Msite'
 import Login from '@/pages/Login/Login'
 import Profile from '@/pages/Profile/Profile'
 import Shop from '@/pages/Shop/Shop'
+import ShopGoods from '@/pages/Shop/ShopGoods/ShopGoods'
 import Order from '@/pages/Order/Order'
 import Search from '@/pages/Search/Search'
 Vue.use(Router)
@@ -39,9 +40,16 @@ export default new Router({
       path: '/shop',
       name: 'shop',
       component: Shop,
-      meta: {
-        showFooter: true
-      }
+      children: [
+        {
+          path: '/shop/goods',
+          component: ShopGoods
+        },
+        {
+          path: '',
+          redirect: '/shop/goods'
+        }
+      ]
     },
     {
       path: '/order',
