@@ -7,6 +7,8 @@ import store from './store'
 import {Button} from 'mint-ui'
 // 引入mint-ui css
 import 'mint-ui/lib/style.css'
+// 加载mockServer即可
+import '@/mock/mockServer'
 
 Vue.config.productionTip = false
 // 注册全局组件标签
